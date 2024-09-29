@@ -4,8 +4,7 @@ const { registerUser, setUserInfo, returnRegisterToken } = require('./helpers')
 
 const { handleError } = require('../../middleware/utils')
 const {
-  emailExists,
-  sendRegistrationEmailMessage
+  emailExists
 } = require('../../middleware/emailer')
 
 /**
@@ -18,16 +17,15 @@ const register = async (req, res) => {
     // Gets locale from header 'Accept-Language'
     const locale = req.getLocale()
     req = matchedData(req)
-    const doesEmailExists = await emailExists(req.email)
+    const doesEmailExists = await emailExists(req.Email)
     if (!doesEmailExists) {
       const item = await registerUser(req)
       const userInfo = await setUserInfo(item)
-      const response = await returnRegisterToken(item, userInfo)
-      sendRegistrationEmailMessage(locale, item)
-      res.status(201).json({
-        success : true,
-        result:  response,
-        message: null
+      // sendRegistrationEmailMessage(locale, item)
+      res.status(200).json({
+        success: true,
+        result: null,
+        message: "Register Successfully"
       })
     }
   } catch (error) {

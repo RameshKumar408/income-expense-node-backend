@@ -5,34 +5,16 @@ const mongoosePaginate = require('mongoose-paginate-v2')
 
 const UserSchema = new mongoose.Schema(
   {
-    deviceid: {
+    Name: {
       type: String,
       required: true
     },
-    password: {
+    Password: {
       type: String,
       required: true,
       select: false
     },
-    wadress: {
-      type: mongoose.Schema.Types.ObjectId
-    },
-    Networks: {
-      type: [mongoose.Schema.Types.ObjectId],
-      default: [],
-      ref: 'networks'
-    },
-    Coins: {
-      type: [mongoose.Schema.Types.ObjectId],
-      default: [],
-      // ref: 'TradePairs'
-    },
-    // twofa: {
-    //   type: String,
-    //   enum: ['google', 'email', 'mobile', null],
-    //   default: null
-    // },
-    email: {
+    Email: {
       type: String,
     },
     role: {
@@ -50,31 +32,6 @@ const UserSchema = new mongoose.Schema(
     verified: {
       type: Boolean,
       default: false
-    },
-
-    First_Name: {
-      type: String
-    },
-    Last_Name: {
-      type: String
-    },
-    Email_Address: {
-      type: String
-    },
-    Phone_NO: {
-      type: Number
-    },
-    Profile_Image: {
-      type: String
-    },
-    phone: {
-      type: String
-    },
-    city: {
-      type: String
-    },
-    country: {
-      type: String
     },
     urlTwitter: {
       type: String,
@@ -114,11 +71,11 @@ const UserSchema = new mongoose.Schema(
 )
 
 const hash = (user, salt, next) => {
-  bcrypt.hash(user.password, salt, (error, newHash) => {
+  bcrypt.hash(user.Password, salt, (error, newHash) => {
     if (error) {
       return next(error)
     }
-    user.password = newHash
+    user.Password = newHash
     return next()
   })
 }
@@ -135,14 +92,14 @@ const genSalt = (user, SALT_FACTOR, next) => {
 UserSchema.pre('save', function (next) {
   const that = this
   const SALT_FACTOR = 5
-  if (!that.isModified('password')) {
+  if (!that.isModified('Password')) {
     return next()
   }
   return genSalt(that, SALT_FACTOR, next)
 })
 
 UserSchema.methods.comparePassword = function (passwordAttempt, cb) {
-  bcrypt.compare(passwordAttempt, this.password, (err, isMatch) =>
+  bcrypt.compare(passwordAttempt, this.Password, (err, isMatch) =>
     err ? cb(err) : cb(null, isMatch)
   )
 }

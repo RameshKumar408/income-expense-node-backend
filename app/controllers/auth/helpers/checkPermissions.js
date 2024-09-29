@@ -14,7 +14,7 @@ const checkPermissions = ({ id = '', roles = [] }, next) => {
         if (roles.indexOf(result.role) > -1) {
           return resolve(next())
         }
-        reject(buildErrObject(401, 'UNAUTHORIZED'))
+        reject(buildErrObject(400, 'UNAUTHORIZED'))
       } catch (error) {
         reject(error)
       }

@@ -8,24 +8,18 @@ const { check } = require('express-validator')
  * Validates login request
  */
 const validateLogin = [
-  check('deviceid')
+  check('Email')
     .exists()
-    .withMessage('deviceid MISSING')
+    .withMessage('Email MISSING')
     .not()
     .isEmpty()
-    .withMessage('Please Enter Device ID'),
-  check('password')
+    .withMessage('Please Enter Email'),
+  check('Password')
     .exists()
-    .withMessage('password MISSING')
+    .withMessage('Password MISSING')
     .not()
     .isEmpty()
     .withMessage('Please Enter Password'),
-  check('check')
-    .exists()
-    .withMessage('check MISSING')
-    .not()
-    .isEmpty()
-    .withMessage('Please Enter Check'),
   (req, res, next) => {
     validateResult(req, res, next)
   }

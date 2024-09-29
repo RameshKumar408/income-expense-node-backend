@@ -3,7 +3,7 @@ const validator = require('validator')
 
 const UserAccessSchema = new mongoose.Schema(
   {
-    deviceid: {
+    Email: {
       type: String,
       lowercase: true,
       required: true

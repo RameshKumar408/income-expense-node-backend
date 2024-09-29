@@ -9,7 +9,7 @@ const emailExists = (email = '') => {
   return new Promise((resolve, reject) => {
     User.findOne(
       {
-        email
+        Email: email
       },
       (err, item) => {
         if (err) {
@@ -17,7 +17,7 @@ const emailExists = (email = '') => {
         }
 
         if (item) {
-          return reject(buildErrObject(422, 'EMAIL_ALREADY_EXISTS'))
+          return reject(buildErrObject(422, 'Email Already Exist'))
         }
         resolve(false)
       }

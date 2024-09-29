@@ -9,12 +9,12 @@ const findUser = (deviceid = '') => {
   return new Promise((resolve, reject) => {
     User.findOne(
       {
-        deviceid
+        Email: deviceid
       },
-      'password loginAttempts blockExpires deviceid role verified verification wadress',
+      'Password loginAttempts blockExpires Name role verified verification Email',
       async (err, item) => {
         try {
-          await itemNotFound(err, item, 'USER_DOES_NOT_EXIST')
+          await itemNotFound(err, item, 'Email Not Found')
           resolve(item)
         } catch (error) {
           resolve(error)
